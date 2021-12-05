@@ -17,6 +17,7 @@ import me.realized.duels.util.compat.CompatUtil;
 import me.realized.duels.util.compat.Items;
 import me.realized.duels.util.compat.Potions;
 import me.realized.duels.util.compat.nbt.NBT;
+import me.realized.duels.util.inventory.ItemUtil;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -73,7 +74,9 @@ public class ItemData {
             item = NBT.parseAndSetTag(item, nbt);
         }
 
-        return NBT.setItemString(item, DUELS_ITEM_IDENTIFIER, true);
+        item = NBT.setItemString(item, DUELS_ITEM_IDENTIFIER, true);
+
+        return ItemUtil.ensureConversion(item);
     }
 
     @Override

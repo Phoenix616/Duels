@@ -25,6 +25,7 @@ public final class NBT {
     private static final Method SET_TAG;
     private static final Method SET;
     private static final Method ADD;
+    private static final Method SIZE;
     private static final Method GET_LIST;
     private static final Method SET_STRING;
     private static final Method SET_INT;
@@ -61,6 +62,7 @@ public final class NBT {
         GET_LIST = ReflectionUtil.getMethod(TAG_COMPOUND, "getList", String.class, int.class);
         ADD_INSERT = ReflectionUtil.getMethodUnsafe(TAG_LIST, "add", TAG_BASE) == null;
         ADD = ADD_INSERT ? ReflectionUtil.getMethod(TAG_LIST, "add", Integer.TYPE, TAG_BASE) : ReflectionUtil.getMethod(TAG_LIST, "add", TAG_BASE);
+        SIZE = ReflectionUtil.getMethod(TAG_LIST, "size");
         SET_STRING = ReflectionUtil.getMethod(TAG_COMPOUND, "setString", String.class, String.class);
         SET_INT = ReflectionUtil.getMethod(TAG_COMPOUND, "setInt", String.class, int.class);
         SET_DOUBLE = ReflectionUtil.getMethod(TAG_COMPOUND, "setDouble", String.class, double.class);
@@ -194,7 +196,8 @@ public final class NBT {
     public static void add(final Object list, final Object value) {
         try {
             if (ADD_INSERT) {
-                ADD.invoke(list, 0, value);
+                int size = (int) SIZE.invoke(list);
+                ADD.invoke(list, size, value);
             } else {
                 ADD.invoke(list, value);
             }
