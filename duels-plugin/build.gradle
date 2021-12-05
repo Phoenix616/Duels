@@ -39,7 +39,6 @@ dependencies {
     compile project(':duels-worldguard-v7')
     compile project(':duels-api')
     compile 'com.google.code.gson:gson:2.8.2'
-    compile 'org.inventivetalent.spiget-update:bukkit:1.4.2-SNAPSHOT'
 }
 
 shadowJar {
@@ -51,10 +50,8 @@ shadowJar {
         include(dependency(':duels-worldguard-v7'))
         include(dependency(':duels-api'))
         include(dependency('com.google.code.gson:.*'))
-        include(dependency('org.inventivetalent.spiget-update:.*'))
     }
     def group = project.group.toString() + "." + parent.name.toLowerCase() + ".shaded."
-    relocate 'org.inventivetalent.update.spiget', group + 'update.spiget'
     relocate 'com.google.gson', group + 'gson'
 }
 
